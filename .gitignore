@@ -37,6 +37,10 @@ out/
 # Visual Studio
 .vs/
 *.vcxproj.user
+*.vcxproj
+*.vcxproj.filters
+*.sln
+x64/
 
 # Executables
 *.exe
