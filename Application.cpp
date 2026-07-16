@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include "ShaderSources.h"
 #include "Application.h"
 
 constexpr int Screen_Width = 800;
@@ -15,33 +16,40 @@ void Application::InitializeWindow() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = glfwCreateWindow(Screen_Width, Screen_Height, "3D Renderer", nullptr, nullptr);
+	window = glfwCreateWindow(Screen_Width, Screen_Height, "3D Renderer", nullptr, nullptr);
 	if (!window) {
 		std::cout << "Failed to initialize window" << "\n";
 		glfwTerminate();
 		return;
 	}
 	glfwMakeContextCurrent(window);
-
+	
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << "\n";
 		return;
 	}
 
-	glViewport(0, 0, Screen_Height, Screen_Width);
+	glViewport(0, 0, Screen_Width, Screen_Height);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
+	ShaderSources src;
+	shader = new Shader(src.vertexShaderSource, src.fragmentShaderSource);
+}
+
+void Application::Run()
+{
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
 
-		glClearColor(0.61f, 0.61f, 0.61f, 1.0f);
+
+		shader->Use();
+		glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
-
 	glfwTerminate();
 	return;
 }
