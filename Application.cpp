@@ -35,6 +35,13 @@ void Application::InitializeWindow() {
 
 	ShaderSources src;
 	shader = new Shader(src.vertexShaderSource, src.fragmentShaderSource);
+
+	float vertices[] = {
+		-0.5f, -0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
+		0.0f, 0.5f, 0.0f
+	};
+	mesh = new Mesh(vertices, sizeof(vertices));
 }
 
 void Application::Run()
@@ -42,10 +49,11 @@ void Application::Run()
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
 
-
-		shader->Use();
+		//rendering
 		glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
 		glClear(GL_COLOR_BUFFER_BIT);
+		shader->Use();
+		mesh->Draw();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
