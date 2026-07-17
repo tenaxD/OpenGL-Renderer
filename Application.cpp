@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 #include "ShaderSources.h"
 #include "Primitives.h"
@@ -60,12 +61,14 @@ void Application::Run()
 		glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
 		glClear(GL_COLOR_BUFFER_BIT);
 		shader->Use();
-		glm::mat4 model = glm::mat4(1.0f);
-		shader->SetMat4("model", model);
+
 		shader->SetMat4("view", camera->GetViewMatrix());
 		shader->SetMat4("projection", camera->GetProjectionMatrix(800.0f, 600.0f));
-		for (auto mesh : meshes) {
-			mesh->Draw();
+		for (size_t i{}; i < meshes.size(); i++) {
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, positions[i]);
+			shader->SetMat4("model", model);
+			meshes[i]->Draw();
 		}
 
 		glfwSwapBuffers(window);

@@ -1,7 +1,7 @@
 #pragma once
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <glm/vec4.hpp>
+#include <glm/glm.hpp>
 #include "Shader.h"
 #include <vector>
 #include "Mesh.h"
@@ -23,4 +23,10 @@ private:
 	GLFWwindow* window = nullptr;
 	Shader* shader = nullptr;
 	std::vector<Mesh*> meshes;
+
+	std::vector<glm::vec3> positions = {
+			glm::vec3(0.0f, 0.0f,  0.0f),
+			glm::vec3(2.0f, 0.0f,  0.0f),
+			glm::vec3(-2.0f, 0.0f,  0.0f)
+	};
 };
