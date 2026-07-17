@@ -6,4 +6,5 @@ public:
 	~Mesh();
 private:
 	unsigned int VAO, VBO;
+	unsigned int vertexCount;
 };

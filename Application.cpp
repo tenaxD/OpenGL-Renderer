@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "ShaderSources.h"
+#include "Primitives.h"
 #include "Application.h"
 
 constexpr int Screen_Width = 800;
@@ -36,12 +37,10 @@ void Application::InitializeWindow() {
 	ShaderSources src;
 	shader = new Shader(src.vertexShaderSource, src.fragmentShaderSource);
 
-	float vertices[] = {
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		0.0f, 0.5f, 0.0f
-	};
-	mesh = new Mesh(vertices, sizeof(vertices));
+
+	meshes.push_back(Primitives::CreateTriangle());
+	meshes.push_back(Primitives::CreateCube());
+
 }
 
 void Application::Run()
@@ -53,7 +52,9 @@ void Application::Run()
 		glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
 		glClear(GL_COLOR_BUFFER_BIT);
 		shader->Use();
-		mesh->Draw();
+		for (auto mesh : meshes) {
+			mesh->Draw();
+		}
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

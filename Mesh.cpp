@@ -16,12 +16,14 @@ Mesh::Mesh(float vertices[], unsigned int size)
 	glEnableVertexAttribArray(0);
 
 	glBindVertexArray(0);
+
+	vertexCount = size / sizeof(float) / 3;
 }
 
 void Mesh::Draw()
 {
 	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 }
 
 Mesh::~Mesh()

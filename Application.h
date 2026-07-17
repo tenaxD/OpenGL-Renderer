@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/vec4.hpp>
 #include "Shader.h"
+#include <vector>
 #include "Mesh.h"
 
 class Application {
@@ -13,5 +14,5 @@ public:
 private:
 	GLFWwindow* window = nullptr;
 	Shader* shader = nullptr;
-	Mesh* mesh = nullptr;
+	std::vector<Mesh*> meshes;
 };
