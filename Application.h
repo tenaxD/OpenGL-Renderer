@@ -1,17 +1,25 @@
 #pragma once
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/vec4.hpp>
 #include "Shader.h"
 #include <vector>
 #include "Mesh.h"
+#include "Camera.h"
 
 class Application {
 public:
 	void InitializeWindow();
 	void Run();
-	void processInput(GLFWwindow* window);
+	void processInput(GLFWwindow* window, float deltaTime);
+	void mouseCallback(double xPos, double yPos);
+	static void StaticMouseCallback(GLFWwindow* window, double xPos, double yPos);
 	glm::vec4 bgColor = { 0.61f, 0.61f, 0.61f, 1.0f };
 private:
+	Camera* camera = nullptr;
+	float lastFrame = 0.0f;
+	float lastX{ 400.0f }, lastY{ 300.0f };
+	bool firstMouse = true;
 	GLFWwindow* window = nullptr;
 	Shader* shader = nullptr;
 	std::vector<Mesh*> meshes;

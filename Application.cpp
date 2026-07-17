@@ -37,6 +37,11 @@ void Application::InitializeWindow() {
 	ShaderSources src;
 	shader = new Shader(src.vertexShaderSource, src.fragmentShaderSource);
 
+	camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+	glfwSetWindowUserPointer(window, this);
+	glfwSetCursorPosCallback(window, StaticMouseCallback);
 
 	meshes.push_back(Primitives::CreateTriangle());
 	meshes.push_back(Primitives::CreateCube());
@@ -46,12 +51,19 @@ void Application::InitializeWindow() {
 void Application::Run()
 {
 	while (!glfwWindowShouldClose(window)) {
-		processInput(window);
+		float currentFrame = static_cast<float>(glfwGetTime());
+		float deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+		processInput(window, deltaTime);
 
 		//rendering
 		glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
 		glClear(GL_COLOR_BUFFER_BIT);
 		shader->Use();
+		glm::mat4 model = glm::mat4(1.0f);
+		shader->SetMat4("model", model);
+		shader->SetMat4("view", camera->GetViewMatrix());
+		shader->SetMat4("projection", camera->GetProjectionMatrix(800.0f, 600.0f));
 		for (auto mesh : meshes) {
 			mesh->Draw();
 		}
@@ -63,10 +75,38 @@ void Application::Run()
 	return;
 }
 
-void Application::processInput(GLFWwindow* window)
+void Application::processInput(GLFWwindow* window, float deltaTime)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+
+	camera->ProcessKeyboard(deltaTime,
+		glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS,
+		glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS,
+		glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS,
+		glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS
+	);
+}
+
+void Application::mouseCallback(double xPos, double yPos)
+{
+	if (firstMouse) {
+		lastX = xPos;
+		lastY = yPos;
+		firstMouse = false;
+	}
+	float xOffset = xPos - lastX;
+	float yOffset = lastY - yPos;
+	lastX = xPos;
+	lastY = yPos;
+
+	camera->ProcessMouse(xOffset, yOffset);
+}
+
+void Application::StaticMouseCallback(GLFWwindow* window, double xPos, double yPos)
+{
+	Application* app = (Application*)glfwGetWindowUserPointer(window);
+	app->mouseCallback(xPos, yPos);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)

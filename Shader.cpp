@@ -1,6 +1,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
 #include <iostream>
+
+#include <glm/gtc/type_ptr.hpp>
 #include "Shader.h"
 
 Shader::Shader(const char* vertexSrc, const char* fragmentSrc)
@@ -48,4 +51,9 @@ Shader::Shader(const char* vertexSrc, const char* fragmentSrc)
 void Shader::Use()
 {
 	glUseProgram(shaderProgram);
+}
+
+void Shader::SetMat4(const char* name, glm::mat4 value)
+{
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, name), 1, GL_FALSE, glm::value_ptr(value));
 }
