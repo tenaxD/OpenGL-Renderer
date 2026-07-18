@@ -44,8 +44,10 @@ void Application::InitializeWindow() {
 	glfwSetWindowUserPointer(window, this);
 	glfwSetCursorPosCallback(window, StaticMouseCallback);
 
-	meshes.push_back(Primitives::CreateTriangle());
-	meshes.push_back(Primitives::CreateCube());
+	models.push_back(new Model("C:/Users/Admin/Downloads/UE4_Mannequin.FBX"));
+
+	/*meshes.push_back(Primitives::CreateTriangle());
+	meshes.push_back(Primitives::CreateCube());*/
 
 }
 
@@ -69,6 +71,14 @@ void Application::Run()
 			model = glm::translate(model, positions[i]);
 			shader->SetMat4("model", model);
 			meshes[i]->Draw();
+		}
+		//rendering imported obj, fbx etc.
+		glm::mat4 modelMatrix = glm::mat4(1.0f);
+		modelMatrix = glm::rotate(modelMatrix, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		modelMatrix = glm::scale(modelMatrix, glm::vec3(0.01f, 0.01f, 0.01f));
+		shader->SetMat4("model", modelMatrix);
+		for (auto model : models) {
+			model->Draw();
 		}
 
 		glfwSwapBuffers(window);

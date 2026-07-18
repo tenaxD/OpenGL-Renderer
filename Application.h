@@ -5,6 +5,7 @@
 #include "Shader.h"
 #include <vector>
 #include "Mesh.h"
+#include "Model.h"
 #include "Camera.h"
 
 class Application {
@@ -22,6 +23,7 @@ private:
 	bool firstMouse = true;
 	GLFWwindow* window = nullptr;
 	Shader* shader = nullptr;
+	std::vector<Model*> models;
 	std::vector<Mesh*> meshes;
 
 	std::vector<glm::vec3> positions = {
