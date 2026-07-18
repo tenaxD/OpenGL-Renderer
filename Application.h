@@ -31,4 +31,5 @@ private:
 			glm::vec3(2.0f, 0.0f,  0.0f),
 			glm::vec3(-2.0f, 0.0f,  0.0f)
 	};
+	std::vector<float> modelScales = { 0.01f, 1.0f };
 };

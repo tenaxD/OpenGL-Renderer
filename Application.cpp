@@ -45,6 +45,8 @@ void Application::InitializeWindow() {
 	glfwSetCursorPosCallback(window, StaticMouseCallback);
 
 	models.push_back(new Model("C:/Users/Admin/Downloads/UE4_Mannequin.FBX"));
+	models.push_back(new Model("C:/Users/Admin/Desktop/Stalker.fbx"));
+
 
 	/*meshes.push_back(Primitives::CreateTriangle());
 	meshes.push_back(Primitives::CreateCube());*/
@@ -73,12 +75,13 @@ void Application::Run()
 			meshes[i]->Draw();
 		}
 		//rendering imported obj, fbx etc.
-		glm::mat4 modelMatrix = glm::mat4(1.0f);
-		modelMatrix = glm::rotate(modelMatrix, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-		modelMatrix = glm::scale(modelMatrix, glm::vec3(0.01f, 0.01f, 0.01f));
-		shader->SetMat4("model", modelMatrix);
-		for (auto model : models) {
-			model->Draw();
+		for (size_t i{}; i < models.size(); i++) {
+			glm::mat4 modelMatrix = glm::mat4(1.0f);
+			modelMatrix = glm::rotate(modelMatrix, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+			modelMatrix = glm::scale(modelMatrix, glm::vec3(modelScales[i], modelScales[i], modelScales[i]));
+			modelMatrix = glm::translate(modelMatrix, positions[i]);
+			shader->SetMat4("model", modelMatrix);
+			models[i]->Draw();
 		}
 
 		glfwSwapBuffers(window);
