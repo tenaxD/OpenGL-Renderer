@@ -3,5 +3,5 @@
 A 3D renderer written in C++ using OpenGL, GLFW and GLAD.
 
 ## Goals
-- FBX model importing
+- FBX model importing(Done)
 - Viewport camera(Done)
