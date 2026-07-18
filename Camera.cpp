@@ -17,13 +17,17 @@ glm::mat4 Camera::GetProjectionMatrix(float screenWidth, float screenHeight)
 	return glm::perspective(glm::radians(fov), screenWidth / screenHeight, 0.1f, 100.0f);
 }
 
-void Camera::ProcessKeyboard(float deltaTime, bool forward, bool backward, bool left, bool right)
+void Camera::ProcessKeyboard(float deltaTime, bool forward, bool backward, bool left, bool right, bool moveUp, bool moveDown, bool sprint)
 {
 	float velocity = speed * deltaTime;
+	if (sprint) velocity *= 3.0f;
 	if (forward) position += front * velocity;
 	if (backward) position -= front * velocity;
-	if (left) position -= glm::normalize(glm::cross(front, up)) * velocity;
-	if (right) position += glm::normalize(glm::cross(front, up)) * velocity;
+	glm::vec3 right_dir = glm::normalize(glm::cross(front, up));
+	if (left)  position -= right_dir * velocity;
+	if (right) position += right_dir * velocity;
+	if (moveUp) position += up * velocity;
+	if (moveDown) position -= up * velocity;
 }
 
 void Camera::ProcessMouse(float xOffset, float yOffset)

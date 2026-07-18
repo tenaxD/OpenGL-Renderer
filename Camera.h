@@ -9,7 +9,7 @@ public:
 	Camera(glm::vec3 position);
 	glm::mat4 GetViewMatrix();
 	glm::mat4 GetProjectionMatrix(float screenWidth, float screenHeight);
-	void ProcessKeyboard(float deltaTime, bool forward, bool backward, bool left, bool right);
+	void ProcessKeyboard(float deltaTime, bool forward, bool backward, bool left, bool right, bool moveUp, bool moveDown, bool sprint);
 	void ProcessMouse(float xOffset, float yOffset);
 
 private:

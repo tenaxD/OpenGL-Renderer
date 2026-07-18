@@ -87,7 +87,10 @@ void Application::processInput(GLFWwindow* window, float deltaTime)
 		glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS,
 		glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS,
 		glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS,
-		glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS
+		glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS,
+		glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS,
+		glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS,
+		glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS
 	);
 }
 
