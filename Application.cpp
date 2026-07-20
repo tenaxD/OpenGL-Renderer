@@ -49,6 +49,7 @@ void Application::InitializeWindow() {
 
 	//Paste models here. IMPORTANT: Remember to add new scale value in Application.h if you're adding another model. If you don't the program will crash
 	models.push_back(new Model("C:/Users/Admin/source/repos/3DRenderer/Stalker.fbx")); // the path may vary on different computers
+
 	//Create meshes here
 	meshes.push_back(Primitives::CreateTriangle());
 	meshes.push_back(Primitives::CreateCube());
