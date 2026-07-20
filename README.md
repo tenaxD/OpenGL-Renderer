@@ -35,6 +35,7 @@ Built with **Visual Studio 2022** on Windows. Open `3DRenderer.sln` and build.
 ## Usage
 
 ### Importing a model
+![3D Renderer](Code.png)
 Add this line in `Application.cpp`:
 ```cpp
 models.push_back(new Model("PathToYourModel"));
