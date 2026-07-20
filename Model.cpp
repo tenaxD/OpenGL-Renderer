@@ -59,7 +59,7 @@ Mesh* Model::ProcessMesh(aiMesh* mesh, const aiScene* scene) {
         }
     }
 
-    return new Mesh(vertices.data(), vertices.size() * sizeof(float), textureID);
+    return new Mesh(vertices.data(), vertices.size() * sizeof(float), textureID, true);
 }
 
 

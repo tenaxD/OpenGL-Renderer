@@ -46,12 +46,12 @@ void Application::InitializeWindow() {
 	glfwSetWindowUserPointer(window, this);
 	glfwSetCursorPosCallback(window, StaticMouseCallback);
 
-	models.push_back(new Model("C:/Users/Admin/Downloads/UE4_Mannequin.FBX"));
-	models.push_back(new Model("C:/Users/Admin/Desktop/Stalker.fbx"));
 
-
-	/*meshes.push_back(Primitives::CreateTriangle());
-	meshes.push_back(Primitives::CreateCube());*/
+	//Paste models here. IMPORTANT: Remember to add new scale value in Application.h if you're adding another model. If you don't the program will crash
+	models.push_back(new Model("C:/Users/Admin/source/repos/3DRenderer/Stalker.fbx")); // the path may vary on different computers
+	//Create meshes here
+	meshes.push_back(Primitives::CreateTriangle());
+	meshes.push_back(Primitives::CreateCube());
 
 }
 
@@ -74,7 +74,7 @@ void Application::Run()
 		shader->SetMat4("projection", camera->GetProjectionMatrix(800.0f, 600.0f));
 		for (size_t i{}; i < meshes.size(); i++) {
 			glm::mat4 model = glm::mat4(1.0f);
-			model = glm::translate(model, positions[i]);
+			model = glm::translate(model, meshPositions[i]);
 			shader->SetMat4("model", model);
 			meshes[i]->Draw();
 		}
@@ -84,7 +84,7 @@ void Application::Run()
 			glm::mat4 modelMatrix = glm::mat4(1.0f);
 			modelMatrix = glm::rotate(modelMatrix, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 			modelMatrix = glm::scale(modelMatrix, glm::vec3(modelScales[i], modelScales[i], modelScales[i]));
-			modelMatrix = glm::translate(modelMatrix, positions[i]);
+			modelMatrix = glm::translate(modelMatrix, modelPositions[i]);
 			shader->SetMat4("model", modelMatrix);
 			models[i]->Draw();
 		}

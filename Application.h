@@ -26,10 +26,15 @@ private:
 	std::vector<Model*> models;
 	std::vector<Mesh*> meshes;
 
-	std::vector<glm::vec3> positions = {
-			glm::vec3(0.0f, 0.0f,  0.0f),
-			glm::vec3(2.0f, 0.0f,  0.0f),
-			glm::vec3(-2.0f, 0.0f,  0.0f)
+	std::vector<glm::vec3> meshPositions = {
+			glm::vec3(6.0f, 0.0f,  0.0f),
+			glm::vec3(8.0f, 0.0f,  0.0f),
+			glm::vec3(10.0f, 0.0f,  0.0f)
 	};
-	std::vector<float> modelScales = { 0.01f, 1.0f };
+	std::vector<glm::vec3> modelPositions = {
+		glm::vec3(0.0f, 0.0f,  0.0f),
+		glm::vec3(2.0f, 0.0f,  0.0f),
+		glm::vec3(4.0f, 0.0f,  0.0f)
+	};
+	std::vector<float> modelScales = {1.0f};
 };
