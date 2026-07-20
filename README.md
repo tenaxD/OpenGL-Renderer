@@ -1,4 +1,5 @@
 ![3D Renderer](Example.png)
+
 # 3D Renderer
 A 3D renderer written in C++ using OpenGL, GLFW, GLAD, Assimp and stb_image.
 
@@ -9,43 +10,55 @@ A 3D renderer written in C++ using OpenGL, GLFW, GLAD, Assimp and stb_image.
 - Primitive shapes (cube, triangle)
 
 ## Controls
-- WASD – move
-- Q/E – up/down
-- Left Shift – sprint
-- Mouse – look around
-- Escape – exit
+| Key | Action |
+|-----|--------|
+| WASD | Move |
+| Q / E | Up / Down |
+| Left Shift | Sprint |
+| Mouse | Look around |
+| Escape | Exit |
 
-### Dependencies (manual setup required)
-- GLFW – add to Additional Include Directories and Library Directories
-- GLAD – add glad.c to Source Files
-- GLM – header only, add to Additional Include Directories
-- Assimp – install via vcpkg: `vcpkg install assimp`
-- stb_image – included in project
+## Dependencies
+> Manual setup required before building.
+
+| Library | Setup |
+|---------|-------|
+| GLFW | Add to Additional Include Directories and Library Directories |
+| GLAD | Add `glad.c` to Source Files |
+| GLM | Header only – add to Additional Include Directories |
+| Assimp | `vcpkg install assimp` |
+| stb_image | Included in project |
 
 ## Building
-This project was built with Visual Studio 2022 on Windows.
+Built with **Visual Studio 2022** on Windows. Open `3DRenderer.sln` and build.
 
-# Usage instructions
-To import an fbx you have to paste this into the code in Application.cpp like this:
+## Usage
+
+### Importing a model
+Add this line in `Application.cpp`:
+```cpp
 models.push_back(new Model("PathToYourModel"));
+```
+> The model must be triangulated. For textures, embed them in the `.fbx` on export.
 
-The model should be triangulated and if you want your textures they have to be embedded in the .fbx
-
-To create a triangle or a cube you call either of those two methods:
+### Creating primitives
+```cpp
 meshes.push_back(Primitives::CreateTriangle());
 meshes.push_back(Primitives::CreateCube());
+```
 
-You might want to adjust the position and scale of the meshes/models, to do that just edit this code in Application.h:
+### Adjusting positions and scale
+Edit the following vectors in `Application.h`:
+```cpp
 std::vector<glm::vec3> meshPositions = {
-		glm::vec3(6.0f, 0.0f,  0.0f),
-		glm::vec3(8.0f, 0.0f,  0.0f),
-		glm::vec3(10.0f, 0.0f,  0.0f)
+    glm::vec3(6.0f, 0.0f, 0.0f),
+    glm::vec3(8.0f, 0.0f, 0.0f),
 };
+
 std::vector<glm::vec3> modelPositions = {
-	glm::vec3(0.0f, 0.0f,  0.0f),
-	glm::vec3(2.0f, 0.0f,  0.0f),
-	glm::vec3(4.0f, 0.0f,  0.0f)
+    glm::vec3(0.0f, 0.0f, 0.0f),
+    glm::vec3(2.0f, 0.0f, 0.0f),
 };
-//Add a new position by adding a comma, then glm::vec3(provide 3 values)
-        
-std::vector<float> modelScales = {1.0f //to add you need to put a comma after a previous value and add another scale as a float}; //it scales in the same order that you import your models 
+
+std::vector<float> modelScales = { 1.0f, 1.0f }; // one value per model
+```
