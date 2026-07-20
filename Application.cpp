@@ -32,6 +32,8 @@ void Application::InitializeWindow() {
 		return;
 	}
 
+	glEnable(GL_DEPTH_TEST);
+
 	glViewport(0, 0, Screen_Width, Screen_Height);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
@@ -63,9 +65,11 @@ void Application::Run()
 
 		//rendering
 		glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		shader->Use();
 
+		//primitives
+		shader->SetBool("hasTexture", false);
 		shader->SetMat4("view", camera->GetViewMatrix());
 		shader->SetMat4("projection", camera->GetProjectionMatrix(800.0f, 600.0f));
 		for (size_t i{}; i < meshes.size(); i++) {
@@ -76,6 +80,7 @@ void Application::Run()
 		}
 		//rendering imported obj, fbx etc.
 		for (size_t i{}; i < models.size(); i++) {
+			shader->SetBool("hasTexture", models[i]->HasTextures());
 			glm::mat4 modelMatrix = glm::mat4(1.0f);
 			modelMatrix = glm::rotate(modelMatrix, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 			modelMatrix = glm::scale(modelMatrix, glm::vec3(modelScales[i], modelScales[i], modelScales[i]));
